@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -9,9 +9,9 @@ const MyCart = ({ setShowCart }) => {
   let { cartItems, setCartItems } = useContext(UserContext);
 
   function getIndex(data){
-    if (cartItems.length != 0) {
+    if (cartItems.length !== 0) {
       const indexArr = cartItems.findIndex(
-        (ele) => ele.row == data.row && ele.col == data.col
+        (ele) => ele.row === data.row && ele.col === data.col
       );
       return indexArr
     }
@@ -21,7 +21,7 @@ const MyCart = ({ setShowCart }) => {
  
   let addItem = (data) => {
     const indexArr = getIndex(data)
-      if (indexArr != -1) {
+      if (indexArr !== -1) {
         ++cartItems[indexArr].quantity;
         const up = [...cartItems];
         setCartItems(up);
@@ -30,7 +30,7 @@ const MyCart = ({ setShowCart }) => {
 
   let removeItem = (data) => {
       const indexArr = getIndex(data)
-        if (indexArr != -1) {
+        if (indexArr !== -1) {
           cartItems[indexArr].quantity--;
           // const update = cartItems[indexArr]
           // cartItems[indexArr] = update
@@ -54,7 +54,7 @@ const MyCart = ({ setShowCart }) => {
         </button>
       </div>
       <div className="flex flex-col  items-center bg-white w-11/12  rounded-xl shadow-sm ">
-        {cartItems.length == 0 && (
+        {cartItems.length === 0 && (
           <div className="flex flex-col  items-center">
             <img
               className="  w-[144px] h-[144px] "
@@ -62,6 +62,7 @@ const MyCart = ({ setShowCart }) => {
               src={
                 "https://cdn.grofers.com/assets/ui/empty_states/emp_empty_cart.png"
               }
+              alt="Other1"
             />
             <p className="text-lg py-[10px] font-bold whitespace-nowrap  ">
               {" "}
@@ -79,7 +80,7 @@ const MyCart = ({ setShowCart }) => {
           </div>
         )}
 
-        {cartItems.length != 0 && (
+        {cartItems.length !== 0 && (
           <div className="flex flex-col w-full">
             <div className=" flex flex-row gap-2 pl-[12px] py-3  ">
               <img
@@ -87,6 +88,7 @@ const MyCart = ({ setShowCart }) => {
                   "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=180/assets/eta-icons/30-mins-filled.png"
                 }
                 className="w-[44px] h-[44px]"
+                alt="Othe2r"
               />
               <div className="flex flex-col ">
                 <div className="text-[15px] font-bold">
@@ -103,6 +105,7 @@ const MyCart = ({ setShowCart }) => {
                     "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=135/app/images/products/sliding_image/329500a.jpg?ts=1687949315"
                   }
                   className="w-[70px] h-[70px] rounded border "
+                  alt="Other3"
                 />
 
                 <div className="flex flex-col text-[12px] ">

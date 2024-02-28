@@ -1,21 +1,18 @@
-import React, { useState ,useRef,useEffect, useContext } from "react";
+import React, { useState  } from "react";
 import Navbar from "../../components/navbar/Navbar";
 
 
-import { Outlet,Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import MyCart from "../../components/myCart/MyCart";
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import { UserContext } from "../../ContextAPI/MyProvider";
+
 
 
 const Home = () => {
 // States 
 
 let [showCart ,setShowCart] = useState(false)
-// let [cartItems,setCartItems] = useState([])
-let {cartItems,setCartItems} = useContext(UserContext) 
-
-
+// let {cartItems,setCartItems} = useContext(UserContext) 
 
   return (
     <div  className={`flex flex-col items-center  overflow-clip relative `}>

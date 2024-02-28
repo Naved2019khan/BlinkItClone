@@ -42,10 +42,14 @@ const GridContent = () => {
           <Slider {...settings} className="relative px-6">
             {item.map((elemet, indexAt) => (
               // repeated Div row-ith
-            
-                  <GridItem  key={index * 10 + indexAt}  index={index} indexAt={indexAt} />
-   
-    
+              <Link  to={`item/${index}`}>
+              
+              <GridItem
+                key={index * 10 + indexAt}
+                index={index}
+                indexAt={indexAt}
+              />
+              </Link>
             ))}
           </Slider>
 

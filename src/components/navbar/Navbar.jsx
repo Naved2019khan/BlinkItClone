@@ -1,9 +1,27 @@
-import React from "react";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useContext, useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { UserContext } from "../../ContextAPI/MyProvider";
 
 const Navbar = ({ showCart, setShowCart }) => {
+  let { cartItems } = useContext(UserContext);
+  let [count, setCount] = useState(0);
+  let [price, setprice] = useState(0);
+
+  useEffect(() => {
+    let totalItem = cartItems.reduce((total, item) => total + item.quantity, 0);
+    let totalPrice = cartItems.reduce(
+      (total, item) => total + item.quantity * item.price,
+      0
+    );
+    console.log(totalItem, totalPrice);
+    setCount(totalItem);
+    setprice(totalPrice);
+  }, [cartItems]);
+
   return (
-    <div  className=" block sticky top-0 z-2 bg-white ">
+    <div className=" block sticky top-0 z-2 bg-white ">
       {/* IMPORTANT For Z index navbar z -3, left button z-1 and My Cart 's parent z-2 */}
       <div className="w-screen  flex flex-row items-center border-b  border-gray-200    ">
         <div className="border-r border-gray-200">
@@ -83,9 +101,18 @@ const Navbar = ({ showCart, setShowCart }) => {
             onClick={() => {
               setShowCart(!showCart);
             }}
-            className=" w-24 h-12 bg-green-700 text-white font-bold rounded-lg"
+            className=" flex flex-row items-center justify-center gap-[6px] w-[112px] h-[52px] bg-green-700 text-white font-bold rounded-lg"
           >
-            My Cart
+            <FontAwesomeIcon icon={faCartShopping} />
+            {count === 0 ? (
+              <span className="ml-[2px]">My Cart </span>
+            ) : (
+              <div className=" flex flex-col  items-start">
+                <span className=""> {count} Items</span>
+
+                <div className=""> ${price}</div>
+              </div>
+            )}
           </button>
         </div>
       </div>

@@ -13,28 +13,36 @@ const GridItem = ({ index, indexAt }) => {
 
   useEffect(() => {
     console.log("+++UseEffect+++");
-    let cleanArr = cartItems.filter((item) => item.quantity != 0);
-    if (cleanArr.length != cartItems.length) {
+    let cleanArr = cartItems.filter((item) => item.quantity !== 0);
+    if (cleanArr.length !== cartItems.length) {
       setCartItems(cleanArr);
     }
 
-    if (cartItems.length != 0) {
+    if (cartItems.length !== 0) {
       const indexArr = cartItems.findIndex(
-        (item) => item.row == index && item.col == indexAt
+        (item) => item.row === index && item.col === indexAt
       );
 
-      if (indexArr != -1) {
+      if (indexArr !== -1) {
         setItem(cartItems[indexArr].quantity);
       }
     }
   }, [cartItems]);
 
-  let appendItem = () => {
+
+  let stopEvent = (e)=>{
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  let appendItem = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     let data = {
       product: "English Oven Brown Bread",
       row: index,
       col: indexAt,
-      price: "90",
+      price: 40,
       weight: "200g",
       image: "",
       quantity: 1,
@@ -45,56 +53,64 @@ const GridItem = ({ index, indexAt }) => {
   };
 
   let removeItem = () => {
+    // e.preventDefault();
+    // e.stopPropagation();
     setItem(--item);
-    if (item == 0) {
+    if (item === 0) {
       const indexArr = cartItems.findIndex(
-        (item) => item.row == index && item.col == indexAt
+        (item) => item.row === index && item.col === indexAt
       );
       cartItems.splice(indexArr);
+      let newArr = [...cartItems]
+          setCartItems(newArr);
     } else {
       let data = {
         product: "English Oven Brown Bread",
         row: index,
         col: indexAt,
-        price: "90",
+        price: 40,
         weight: "200g",
         image: "",
         quantity: item,
       };
 
-      if (cartItems.length != 0) {
+      if (cartItems.length !== 0) {
         const indexArr = cartItems.findIndex(
-          (item) => item.row == index && item.col == indexAt
+          (item) => item.row === index && item.col === indexAt
         );
         console.log(item, index, cartItems);
-        if (indexArr != -1) {
+        if (indexArr !== -1) {
           cartItems[indexArr] = data;
-          setCartItems(cartItems);
+          let newArr = [...cartItems]
+          setCartItems(newArr);
         }
       }
     }
   };
 
-  let addQuantity = () => {
+  let addQuantity =(e) => {
+    e.preventDefault();
+    e.stopPropagation();
     setItem(++item);
     let data = {
       product: "English Oven Brown Bread",
       row: index,
       col: indexAt,
-      price: "90",
+      price: 40,
       weight: "200g",
       image: "",
       quantity: item,
     };
 
-    if (cartItems.length != 0) {
+    if (cartItems.length !== 0) {
       const indexArr = cartItems.findIndex(
-        (item) => item.row == index && item.col == indexAt
+        (item) => item.row === index && item.col === indexAt
       );
       console.log(item, index, cartItems);
-      if (indexArr != -1) {
+      if (indexArr !== -1) {
         cartItems[indexArr] = data;
-        setCartItems(cartItems);
+        let newArr = [...cartItems]
+        setCartItems(newArr);
       }
     }
   };
@@ -112,11 +128,12 @@ const GridItem = ({ index, indexAt }) => {
             height={140}
             src={bread}
             className=" bg-gray-200 self-center"
+            alt="someImage"
           />
 
           <div className="flex flex-row px-1 h-[14px] rounded  bg-gray-200 mb-2 mr-auto">
-            <img className="w-[12px] h-[12px]" src={clock} />
-            <p style={{ fontSize: "8px" }} className=" font-bold">
+            <img className="w-[12px] h-[12px]" src={clock}   alt="someImage" />
+            <p style={{ fontSize: "8px" }} className=" font-bold"   alt="someImage">
               15 min
             </p>
           </div>
@@ -129,15 +146,18 @@ const GridItem = ({ index, indexAt }) => {
             <h1 className=" text-sm">$40</h1>
             {item === 0 && (
               <button
-                onClick={appendItem}
+                onClick={(e)=>appendItem(e)}
                 className=" w-20 h-8 border-[1px]  border-green-800 bg-custom-green bg-opacity-10  rounded-md  text-green-950 font-bold"
               >
-                {item == 0 ? <div>ADD</div> : String(item)}
+                {item === 0 ? <div>ADD</div> : String(item)}
               </button>
             )}
-            {item != 0 && (
+            {item !== 0 && (
               <div
                 ref={itemRef}
+                onClick={(e)=>{
+                 stopEvent(e)
+              }}
                 className="flex items-center w-20 h-8 border  border-green-950 bg-custom-green  rounded-md  text-green-950 font-bold overflow-clip"
               >
                 <button
@@ -146,11 +166,13 @@ const GridItem = ({ index, indexAt }) => {
                 >
                   <FontAwesomeIcon icon={faMinus} />
                 </button>
-                <div className="flex justify-center grow text-white">
+                <div 
+                onClick={(e)=>  stopEvent(e)}
+                className="flex justify-center grow text-white">
                   {item}
                 </div>
                 <button
-                  onClick={addQuantity}
+                  onClick={(e)=>addQuantity(e)}
                   className=" w-5 h-8 text-[10px]  text-white "
                 >
                   <FontAwesomeIcon icon={faPlus} />
