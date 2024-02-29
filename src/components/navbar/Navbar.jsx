@@ -21,7 +21,7 @@ const Navbar = ({ showCart, setShowCart }) => {
   }, [cartItems]);
 
   return (
-    <div className=" block sticky top-0 z-2 bg-white ">
+    <nav className=" block sticky top-0 z-2 bg-white ">
       {/* IMPORTANT For Z index navbar z -3, left button z-1 and My Cart 's parent z-2 */}
       <div className="w-screen  flex flex-row items-center border-b  border-gray-200    ">
         <div className="border-r border-gray-200">
@@ -116,7 +116,7 @@ const Navbar = ({ showCart, setShowCart }) => {
           </button>
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 

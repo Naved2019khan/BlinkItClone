@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import bread from "../../Assets/bread_rp.avif";
 import clock from "../../Assets/clock.avif";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -9,8 +9,6 @@ import { UserContext } from "../../ContextAPI/MyProvider";
 const GridItem = ({ index, indexAt }) => {
   let [item, setItem] = useState(0);
   let { cartItems, setCartItems } = useContext(UserContext);
-  let itemRef = useRef();
-
   useEffect(() => {
     console.log("+++UseEffect+++");
     let cleanArr = cartItems.filter((item) => item.quantity !== 0);
@@ -28,6 +26,82 @@ const GridItem = ({ index, indexAt }) => {
       }
     }
   }, [cartItems]);
+  let appendItem = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    let data = {
+      product: "English Oven Brown Bread",
+      row: index,
+      col: indexAt,
+      price: 40,
+      weight: "200g",
+      image: "",
+      quantity: 1,
+    };
+    setItem(1);
+    let newArr = [...cartItems, data];
+    setCartItems(newArr);
+  };
+
+
+  return (
+    <>
+      <div className=" flex flex-row  pb-3 ">
+        <div
+          style={{ width: "180px" }}
+          className="flex flex-col  border shadow-sm border-gray-200 rounded-lg overflow-hidden p-2"
+          // id={index * 10 + indexAt}
+        >
+          <img
+            width={140}
+            height={140}
+            src={bread}
+            className=" bg-gray-200 self-center"
+            alt="someImage"
+          />
+
+          <div className="flex flex-row px-1 h-[14px] rounded  bg-gray-200 mb-2 mr-auto">
+            <img className="w-[12px] h-[12px]" src={clock}   alt="someImage" />
+            <p style={{ fontSize: "8px" }} className=" font-bold"   alt="someImage">
+              15 min
+            </p>
+          </div>
+          <h1 className=" writing-vertical-lr text-sm font-bold  mb-1">
+            English Oven Brown bread
+          </h1>
+          <h1 className="mb-2 text-xs">400g</h1>
+        
+
+          <div className="flex flex-row justify-between items-center text-sm font-bold    ">
+            <h1 className=" text-sm">$40</h1>
+            {item === 0 && (
+              <button
+                onClick={(e)=>appendItem(e)}
+                className=" w-20 h-8 border-[1px]  border-green-800 bg-custom-green bg-opacity-10  rounded-md  text-green-950 font-bold"
+              >
+                {item === 0 ? <div>ADD</div> : String(item)}
+              </button>
+            )}
+            {item !== 0 && (
+                <ItemButton index={index} indexAt={indexAt} item={item} setItem={setItem}/>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default GridItem;
+
+
+export function ItemButton({index,indexAt,item,setItem}){
+
+
+  let { cartItems, setCartItems } = useContext(UserContext);
+
+
+  
 
 
   let stopEvent = (e)=>{
@@ -116,74 +190,30 @@ const GridItem = ({ index, indexAt }) => {
   };
 
   return (
-    <>
-      <div className=" flex flex-row  pb-3 ">
-        <div
-          style={{ width: "180px" }}
-          className="flex flex-col  border shadow-sm border-gray-200 rounded-lg overflow-hidden p-2"
-          // id={index * 10 + indexAt}
-        >
-          <img
-            width={140}
-            height={140}
-            src={bread}
-            className=" bg-gray-200 self-center"
-            alt="someImage"
-          />
+    <div
 
-          <div className="flex flex-row px-1 h-[14px] rounded  bg-gray-200 mb-2 mr-auto">
-            <img className="w-[12px] h-[12px]" src={clock}   alt="someImage" />
-            <p style={{ fontSize: "8px" }} className=" font-bold"   alt="someImage">
-              15 min
-            </p>
-          </div>
-          <h1 className=" writing-vertical-lr text-sm font-bold  mb-1">
-            English Oven Brown bread
-          </h1>
-          <h1 className="mb-2 text-xs">400g</h1>
-
-          <div className="flex flex-row justify-between items-center text-sm font-bold    ">
-            <h1 className=" text-sm">$40</h1>
-            {item === 0 && (
-              <button
-                onClick={(e)=>appendItem(e)}
-                className=" w-20 h-8 border-[1px]  border-green-800 bg-custom-green bg-opacity-10  rounded-md  text-green-950 font-bold"
-              >
-                {item === 0 ? <div>ADD</div> : String(item)}
-              </button>
-            )}
-            {item !== 0 && (
-              <div
-                ref={itemRef}
-                onClick={(e)=>{
-                 stopEvent(e)
-              }}
-                className="flex items-center w-20 h-8 border  border-green-950 bg-custom-green  rounded-md  text-green-950 font-bold overflow-clip"
-              >
-                <button
-                  onClick={removeItem}
-                  className=" w-5 h-8 text-[10px] text-white"
-                >
-                  <FontAwesomeIcon icon={faMinus} />
-                </button>
-                <div 
-                onClick={(e)=>  stopEvent(e)}
-                className="flex justify-center grow text-white">
-                  {item}
-                </div>
-                <button
-                  onClick={(e)=>addQuantity(e)}
-                  className=" w-5 h-8 text-[10px]  text-white "
-                >
-                  <FontAwesomeIcon icon={faPlus} />
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
-
-export default GridItem;
+    onClick={(e)=>{
+     stopEvent(e)
+  }}
+    className="flex items-center w-20 h-8 border  border-green-950 bg-custom-green  rounded-md  text-green-950 font-bold overflow-clip"
+  >
+    <button
+      onClick={removeItem}
+      className=" w-5 h-8 text-[10px] text-white"
+    >
+      <FontAwesomeIcon icon={faMinus} />
+    </button>
+    <div 
+    onClick={(e)=>  stopEvent(e)}
+    className="flex justify-center grow text-white">
+      {item}
+    </div>
+    <button
+      onClick={(e)=>addQuantity(e)}
+      className=" w-5 h-8 text-[10px]  text-white "
+    >
+      <FontAwesomeIcon icon={faPlus} />
+    </button>
+  </div>
+  )
+}

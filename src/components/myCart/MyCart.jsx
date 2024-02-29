@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext ,useState,useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -7,6 +7,21 @@ import { UserContext } from "../../ContextAPI/MyProvider";
 const MyCart = ({ setShowCart }) => {
  
   let { cartItems, setCartItems } = useContext(UserContext);
+
+  let [count, setCount] = useState(0);
+  let [price, setprice] = useState(0);
+
+  useEffect(() => {
+    let totalItem = cartItems.reduce((total, item) => total + item.quantity, 0);
+    let totalPrice = cartItems.reduce(
+      (total, item) => total + item.quantity * item.price,
+      0
+    );
+    console.log(totalItem, totalPrice);
+    setCount(totalItem);
+    setprice(totalPrice);
+  }, [cartItems]);
+
 
   function getIndex(data){
     if (cartItems.length !== 0) {
@@ -53,27 +68,27 @@ const MyCart = ({ setShowCart }) => {
           />
         </button>
       </div>
-      <div className="flex flex-col  items-center bg-white w-11/12  rounded-xl shadow-sm ">
+      <div className="flex flex-col  items-center bg-white w-[90%]  rounded-xl shadow-sm ">
         {cartItems.length === 0 && (
-          <div className="flex flex-col  items-center">
+          <div className="flex flex-col items-center">
             <img
               className="  w-[144px] h-[144px] "
               alt="empty cart"
               src={
                 "https://cdn.grofers.com/assets/ui/empty_states/emp_empty_cart.png"
               }
-              alt="Other1"
+              
             />
-            <p className="text-lg py-[10px] font-bold whitespace-nowrap  ">
-              {" "}
+            <p className="text-lg pt-[10px] font-bold whitespace-nowrap  ">
+   
               you don't have any items in your cart
             </p>
-            <p className="text-sm  py-[10px]">
+            <p className="text-sm  pb-[10px]">
               your favourite items are just a click away
             </p>
             <button
               onClick={() => setShowCart(false)}
-              className="w-32 mb-8  p-2 text-white bg-green-700 rounded"
+              className=" text-[12px] w-32 mb-8  p-2 text-white bg-green-700 rounded"
             >
               Start shopping
             </button>
@@ -94,7 +109,7 @@ const MyCart = ({ setShowCart }) => {
                 <div className="text-[15px] font-bold">
                   Delivery in 21 minutes
                 </div>
-                <div className="text-[12px] ">Shipment of 1 item</div>
+                <div className="text-[12px]">Shipment of {count} item</div>
               </div>
             </div>
 
@@ -143,3 +158,13 @@ const MyCart = ({ setShowCart }) => {
   );
 };
 export default MyCart;
+
+
+function BillCard(){
+  return (
+    <section className="bg-white w-[90%]">
+      <h1>Bill Details</h1>
+      {/* div>div*2>label>div>img+h1   */}
+    </section>
+  )
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, unstable_useViewTransitionState } from "react-router-dom";
 import NextArrow from "../../components/Arrow/NextArrow";
 import PrevArrow from "../../components/Arrow/PreviousArrow";
 
@@ -29,6 +29,9 @@ const GridContent = () => {
     prevArrow: <PrevArrow />,
   };
 
+  const isTransitioning =
+  unstable_useViewTransitionState("item/:id");
+
   return (
     <div className="w-[1200px] overflow-clip mt-3">
       {/* TODO:  Add Dynamic heading */}
@@ -42,12 +45,16 @@ const GridContent = () => {
           <Slider {...settings} className="relative px-6">
             {item.map((elemet, indexAt) => (
               // repeated Div row-ith
-              <Link  to={`item/${index}`}>
+              <Link   to={`item/${index * 10 + indexAt}`}  unstable_useViewTransitionState>
               
               <GridItem
                 key={index * 10 + indexAt}
                 index={index}
-                indexAt={indexAt}
+                indexAt={indexAt} 
+                style={{
+                  viewTransitionName: isTransitioning
+                }}
+
               />
               </Link>
             ))}

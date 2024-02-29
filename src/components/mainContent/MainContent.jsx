@@ -18,11 +18,6 @@ const MainContent = () => {
     small_list.push(repeat);
   }
 
-  
-
-
-
-
   return ( 
     <>
     <div
