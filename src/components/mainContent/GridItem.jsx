@@ -9,13 +9,20 @@ import { UserContext } from "../../ContextAPI/MyProvider";
 const GridItem = ({ index, indexAt }) => {
   let [item, setItem] = useState(0);
   let { cartItems, setCartItems } = useContext(UserContext);
+
   useEffect(() => {
     console.log("+++UseEffect+++");
+
+    // Local storage 
+    localStorage.setItem('ITEMS',JSON.stringify(cartItems))
+
+    // clean array for 0 quantity 
     let cleanArr = cartItems.filter((item) => item.quantity !== 0);
     if (cleanArr.length !== cartItems.length) {
       setCartItems(cleanArr);
     }
 
+    // set value on change
     if (cartItems.length !== 0) {
       const indexArr = cartItems.findIndex(
         (item) => item.row === index && item.col === indexAt
@@ -26,6 +33,8 @@ const GridItem = ({ index, indexAt }) => {
       }
     }
   }, [cartItems]);
+
+  // add item
   let appendItem = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -109,23 +118,6 @@ export function ItemButton({index,indexAt,item,setItem}){
     e.stopPropagation();
   }
 
-  let appendItem = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    let data = {
-      product: "English Oven Brown Bread",
-      row: index,
-      col: indexAt,
-      price: 40,
-      weight: "200g",
-      image: "",
-      quantity: 1,
-    };
-    setItem(1);
-    let newArr = [...cartItems, data];
-    setCartItems(newArr);
-  };
-
   let removeItem = () => {
     // e.preventDefault();
     // e.stopPropagation();
@@ -134,7 +126,8 @@ export function ItemButton({index,indexAt,item,setItem}){
       const indexArr = cartItems.findIndex(
         (item) => item.row === index && item.col === indexAt
       );
-      cartItems.splice(indexArr);
+      console.log(indexArr,"Index")
+      cartItems.splice(indexArr,1); // diff
       let newArr = [...cartItems]
           setCartItems(newArr);
     } else {

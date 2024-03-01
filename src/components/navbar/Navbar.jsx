@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { UserContext } from "../../ContextAPI/MyProvider";
+import { ScrollText } from "./ScrollText";
 
 const Navbar = ({ showCart, setShowCart }) => {
   let { cartItems } = useContext(UserContext);
@@ -74,7 +75,7 @@ const Navbar = ({ showCart, setShowCart }) => {
         </div>
         <div className=" w-80 flex flex-col items-center ">
           <div>
-            <p className="  text-lg font-bold whitespace-nowrap">
+            <p className="text-lg font-bold whitespace-nowrap">
               Delivery in 16 minutes
             </p>
             <p className=" text-sm whitespace-nowrap">
@@ -84,15 +85,21 @@ const Navbar = ({ showCart, setShowCart }) => {
         </div>
         {/* input field */}
         <div
-          style={{ width: "1100px" }}
-          className="flex items-center justify-around px py-2 bg-gray-100 rounded-md"
+          
+          className="flex flex-row w-[1100px] h-[46px] gap-[8px] items-start justify-center px  bg-gray-100 rounded-[12px] relative"
         >
-          <FaSearch className="mx-4" />
-          <input
+          <FaSearch className="mx-[8px] self-center" />
+          <ScrollText  />
+          {/* <input
             className="grow mr-4 bg-transparent outline-none"
             placeholder="Enter text"
             type="text"
-          />
+          /> */}
+     
+          
+    
+       
+     
         </div>
 
         <div className="flex ml-auto px-10">

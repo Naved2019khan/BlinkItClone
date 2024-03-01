@@ -17,17 +17,20 @@ import App from './App';
 import MainContent from './components/mainContent/MainContent';
 import GridContent from './components/mainContent/GridContent';
 import ItemPage from './pages/home/itemPage/ItemPage';
+import Test from './components/Test';
+import ScrollToTop from './helper/ScrollToTop';
 
 
 
 const router = createBrowserRouter(
   createRoutesFromElements(
+   
     <Route path="/" element={<App />}>
-      
       <Route path="" element={<MainContent />} />
       <Route path="products/:id" element={<GridContent />} />
       <Route path="item/:id" element={<ItemPage />} />
       <Route path="cart" element={<MyCart />} />
+      <Route path='test' element={ <Test />}></Route>
     </Route>
   )
   // {

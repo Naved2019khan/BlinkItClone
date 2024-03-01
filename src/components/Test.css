@@ -1,0 +1,54 @@
+/* .animationWrapper {
+   height:  100px;
+    overflow: hidden; 
+    position: relative;
+    width: 500px;
+  }
+  
+  .animationText {
+        position: absolute;
+        top: 100%;
+        left: 0px;
+        animation: 7500ms ease 0s infinite normal forwards running cbWWSx;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 18px;
+        color: rgb(153, 153, 153);
+        margin-top: 14px;
+  
+  }
+
+  #animationText-1 {
+    animation-delay: 0ms;
+  }
+  #animationText-2 {
+    animation-delay: 1500ms;
+  }
+  #animationText-3 {
+    animation-delay: 3000ms;
+  }
+  #animationText-4 {
+    animation-delay: 4500ms;
+  }
+  #animationText-5 {
+    animation-delay: 6000ms;
+  }
+
+  @keyframes cbWWSx {
+    0% {
+        top: 100%;
+        visibility: visible;
+    }
+    10% {
+        top: 0px;
+    }
+    20% {
+        top: -100%;
+        visibility: hidden;
+    }
+    100% {
+        top: 100%;
+        visibility: hidden;
+    }
+  }
+   */

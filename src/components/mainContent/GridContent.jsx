@@ -45,7 +45,7 @@ const GridContent = () => {
           <Slider {...settings} className="relative px-6">
             {item.map((elemet, indexAt) => (
               // repeated Div row-ith
-              <Link   to={`item/${index * 10 + indexAt}`}  unstable_useViewTransitionState>
+              <Link   to={`item/${index * 10 + indexAt}`}  preventScrollReset={false}>
               
               <GridItem
                 key={index * 10 + indexAt}
