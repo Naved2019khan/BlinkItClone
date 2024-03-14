@@ -1,24 +1,27 @@
-import React from "react";
-import Slider from "react-slick";
-import './Test.css'
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+
+
 export default function Test() {
-  let value = true
+  const [open, setOpen] = React.useState(false);
 
-  return (
-    <>
-    <SubComponent value={value} />
-    <button className=" bg-green-300" onClick={()=> {value = false}}>Hello world</button>
-    </>
-    
+  const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
 
+  const DrawerList = (
+    <Box className="bg-red-400"   sx={{ width: 560 }} role="presentation" onClick={toggleDrawer(false)}>
+      Hello
+    </Box>
   );
-}
 
-function SubComponent({value}){
   return (
-    <>
-      { value === true  && <h1>Hello</h1> }
-    </>
-
-  )
+    <div>
+     
+      <Drawer className='' open={open} onClose={toggleDrawer(false)}>
+        {DrawerList}
+      </Drawer>
+    </div>
+  );
 }
